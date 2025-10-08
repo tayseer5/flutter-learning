@@ -7,11 +7,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Container(
-      margin: const EdgeInsets.all(40),
-      child: SafeArea(
-        //child: Padding(
-          //padding: const EdgeInsets.all(0.0), // 40px padding from screen edges
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -30,12 +28,13 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // Circular Profile Image
                   CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.grey[300],
-                    backgroundImage: const NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'
-                    ),
+                    backgroundImage: const NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'),
+                    onBackgroundImageError: (exception, stackTrace) {
+                      // Handle image loading error
+                    },
                     child: Icon(
                       Icons.person,
                       size: 60,
@@ -54,7 +53,6 @@ class ProfileScreen extends StatelessWidget {
                       decoration: TextDecoration.none,
                     ),
                   ),
-                 // const SizedBox(height: 16),
                   
                   // Bio
                   Text(
@@ -83,9 +81,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-       // ),
+        ),
       ),
-    )
     );
   }
 }
