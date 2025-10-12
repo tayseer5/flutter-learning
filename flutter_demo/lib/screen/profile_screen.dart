@@ -5,18 +5,21 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(40.0),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20), // Rounded corners
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: colorScheme.shadow.withOpacity(0.1),
                   spreadRadius: 2,
                   blurRadius: 10,
                   offset: const Offset(0, 3),
@@ -30,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundColor: Colors.grey[300],
+                    backgroundColor: colorScheme.outline.withOpacity(0.2),
                     backgroundImage: const NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'),
                     onBackgroundImageError: (exception, stackTrace) {
                       // Handle image loading error
@@ -38,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Icon(
                       Icons.person,
                       size: 60,
-                      color: Colors.grey[600],
+                      color: colorScheme.outline,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -46,22 +49,18 @@ class ProfileScreen extends StatelessWidget {
                   // Name
                   Text(
                     'John Doe',
-                    style: TextStyle(
+                    style: theme.textTheme.titleLarge?.copyWith(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      decoration: TextDecoration.none,
                     ),
                   ),
                   
                   // Bio
                   Text(
                     'Software Developer & Flutter Enthusiast',
-                    style: TextStyle(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
-                      color: Colors.grey,
                       fontStyle: FontStyle.italic,
-                      decoration: TextDecoration.none,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -69,11 +68,9 @@ class ProfileScreen extends StatelessWidget {
                   
                   Text(
                     'Passionate about creating beautiful mobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community.',
-                    style: TextStyle(
+                    style: theme.textTheme.bodySmall?.copyWith(
                       fontSize: 14,
-                      color: Colors.black54,
                       height: 1.5,
-                      decoration: TextDecoration.none,
                     ),
                     textAlign: TextAlign.center,
                   ),
