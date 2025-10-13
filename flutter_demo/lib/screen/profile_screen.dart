@@ -56,14 +56,18 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   
-                  Text(
-                    'Passionate about creating beautiful mobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community.',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontSize: 14,
-                      height: 1.5,
+                  Expanded(
+                    child: Text(
+                      'Passionate about creating beautiful mobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community. I have extensive experience in Flutter development, working with various state management solutions like Provider, Bloc, and Riverpod. My expertise includes building responsive UIs, implementing complex animations, integrating third-party APIs, and optimizing app performance. I enjoy mentoring junior developers and contributing to open-source projects. In my free time, I love experimenting with new Flutter packages and staying updated with the latest mobile development trendsmobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community. I have extensive experience in Flutter development, working with various state management solutions like Provider, Bloc, and Riverpod. My expertise includes building responsive UIs, implementing complex animations, integrating third-party APIs, and optimizing app performance. I enjoy mentoring junior developers and contributing to open-source projects. In my free time, I love experimenting with new Flutter packages and staying updated with the latest mobile development trends.',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 20,
+                      overflow: TextOverflow.fade,
                     ),
-                    textAlign: TextAlign.center,
-                 ),
+                  ),
               ],
             ),
           ),
