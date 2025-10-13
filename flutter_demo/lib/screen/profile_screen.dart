@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../extentions/build_context_extentions.dart';
+import '../widgets/app_card_container.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -14,22 +15,9 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(context.screenWidth * 0.09),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.shadow.withValues(alpha: 0.1),
-                  spreadRadius: 2,
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(context.screenWidth * 0.09),
-              child: Column(
+          child: AppCardContainer(
+            padding: EdgeInsets.all(context.screenWidth * 0.09),
+            child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
@@ -75,9 +63,8 @@ class ProfileScreen extends StatelessWidget {
                       height: 1.5,
                     ),
                     textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+                 ),
+              ],
             ),
           ),
         ),
