@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../extentions/build_context_extentions.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -12,14 +13,14 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(40.0),
+          padding: EdgeInsets.all(context.screenWidth * 0.09),
           child: Container(
             decoration: BoxDecoration(
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: colorScheme.shadow.withOpacity(0.1),
+                  color: colorScheme.shadow.withValues(alpha: 0.1),
                   spreadRadius: 2,
                   blurRadius: 10,
                   offset: const Offset(0, 3),
@@ -27,16 +28,17 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(context.screenWidth * 0.09),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundColor: colorScheme.outline.withOpacity(0.2),
-                    backgroundImage: const NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'),
+                    backgroundColor: colorScheme.outline.withValues(alpha: 0.2),
+                    backgroundImage: const NetworkImage('https://encrjypted-tbwewqewqen0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'),
                     onBackgroundImageError: (exception, stackTrace) {
-                      // Handle image loading error
+                      debugPrint('tayseer Image loading failed: $exception');
+                      debugPrint('tayseer Stack trace: $stackTrace');
                     },
                     child: Icon(
                       Icons.person,
