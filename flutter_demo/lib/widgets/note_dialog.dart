@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/noteModel.dart';
+import '../model/note_model.dart';
 import '../providers/note_providers.dart';
 
 class NoteDialog extends ConsumerStatefulWidget {

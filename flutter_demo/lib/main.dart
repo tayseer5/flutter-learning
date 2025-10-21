@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/managers/hive_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_demo/screen/note_module/note_list.dart';
+import 'package:flutter_demo/providers/theme_provider.dart';
 import 'theme/app_theme.dart';
 
-void main() {
-  runApp(
-    ProviderScope(
-      child: const MyApp(),
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HiveManager.init();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+    
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       debugShowCheckedModeBanner: false,
-      home: NoteList(),
+      home: const NoteList(),
     );
   }
 }
+
+// TODO: theam usng shared prefrences and clear genric view , isuue of rerun
