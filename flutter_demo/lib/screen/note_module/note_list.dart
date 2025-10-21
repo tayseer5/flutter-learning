@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/widgets/note_dialog.dart';
 import 'package:flutter_demo/providers/note_providers.dart';
+import 'package:flutter_demo/providers/theme_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 
 class NoteList extends ConsumerWidget {
   const NoteList({super.key});
@@ -10,13 +12,24 @@ class NoteList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notes = ref.watch(notesProvider);
+    final themeMode = ref.watch(themeProvider);
+    final isDarkMode = themeMode == ThemeMode.dark;
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Note List'),
+        actions: [
+          Switch(
+            value: isDarkMode,
+            onChanged: (value) {
+              ref.read(themeProvider.notifier).toggleTheme(value);
+            },
+          ),
+          SizedBox(width: 16),
+        ],
       ),
       body: SafeArea(
-       child: SlidableAutoCloseBehavior (
+       child: notes.isEmpty ? Center(child: Text('No notes found')) : SlidableAutoCloseBehavior (
         child: ListView.builder(
           itemCount: notes.length,
           itemBuilder: (context, index) {
@@ -69,7 +82,8 @@ class NoteList extends ConsumerWidget {
             child: Card(
               margin: EdgeInsets.fromLTRB(12, 20, 12, 5),
               child: ListTile(
-                title: Text(note.noteTitle),
+                title: Text(
+                  note.noteTitle),
                 subtitle: Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(note.noteContent),
