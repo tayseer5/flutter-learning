@@ -3,51 +3,63 @@ import 'package:flutter_demo/helpers/constant.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//final themeModeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
 final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(() => ThemeNotifier());
 
 class ThemeNotifier extends Notifier<ThemeMode> {
-  class ThemeNotifier extends Notifier<ThemeMode> {
-    @override
-    ThemeMode build() {
-      // Return a default theme and load the saved preference asynchronously.
-      // The state will be updated once loading is complete.
-      _loadTheme();
-      return ThemeMode.system; 
-    }
+  bool _hasLoaded = false;
 
-    Future<void> _loadTheme() async {
-      try {
-        final prefs = await SharedPreferences.getInstance();
-        // Use a default of null to detect if a preference has been set.
-        final isDark = prefs.getBool(SharedPreferencesKeys.themeMode);
-      
-        if (isDark != null) {
-          state = isDark ? ThemeMode.dark : ThemeMode.light;
-        }
-        // If isDark is null, we do nothing and let the state remain ThemeMode.system.
-      } catch (e) {
-        // Handle potential errors when accessing shared preferences.
-        debugPrint('Failed to load theme preference: $e');
-      }
+  @override
+  ThemeMode build() {
+    if (!_hasLoaded) {
+      _loadTheme();
+    }
+    return ThemeMode.system; // Default to system theme
+  }
+
+  Future<void> _loadTheme() async {
+    if (_hasLoaded) return; // Prevent multiple loads
+    
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final isDark = prefs.getBool(SharedPreferencesKeys.themeMode) ?? false;
+      _hasLoaded = true;
+      state = isDark ? ThemeMode.dark : ThemeMode.light;
+    } catch (e) {
+      // If loading fails, keep default system theme
+      _hasLoaded = true;
+    }
+  }
 
   Future<void> toggleTheme(bool isDark) async {
     // Immediately update UI for better UX
     state = isDark ? ThemeMode.dark : ThemeMode.light;
     
-    // Then save to preferences (don't wait for this)
-    _saveTheme(isDark);
+    // Save with retry mechanism in background
+    final success = await _saveThemeWithRetry(isDark);
+     if (!success) {
+    // Revert UI state if save failed
+    state = isDark ? ThemeMode.light : ThemeMode.dark;
+    //faild to  update theme alert
+  }
   }
 
-  Future<void> _saveTheme(bool isDark) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(SharedPreferencesKeys.themeMode, isDark);
-    } catch (e) {
-      // Handle save error silently or show user feedback
-      debugPrint('Failed to save theme preference: $e');
+  Future<bool> _saveThemeWithRetry(bool isDark, {int retries = 3}) async {
+    for (int i = 0; i < retries; i++) {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool(SharedPreferencesKeys.themeMode, isDark);
+        return true; // Success
+      } catch (e) {
+        if (i == retries - 1) {
+          // Final attempt failed - log error
+          debugPrint('Failed to save theme after $retries attempts: $e');
+          return false;
+        } else {
+          // Wait before retry with exponential backoff
+          await Future.delayed(Duration(milliseconds: 100 * (i + 1)));
+        }
+      }
     }
+    return false; // Should never reach here, but required for null safety
   }
-
-
 }
