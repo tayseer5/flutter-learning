@@ -7,29 +7,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(() => ThemeNotifier());
 
 class ThemeNotifier extends Notifier<ThemeMode> {
-  bool _hasLoaded = false;
-
-  @override
-  ThemeMode build() {
-    if (!_hasLoaded) {
+  class ThemeNotifier extends Notifier<ThemeMode> {
+    @override
+    ThemeMode build() {
+      // Return a default theme and load the saved preference asynchronously.
+      // The state will be updated once loading is complete.
       _loadTheme();
+      return ThemeMode.system; 
     }
-    return ThemeMode.system; // Default to system theme
-  }
 
-  Future<void> _loadTheme() async {
-    if (_hasLoaded) return; // Prevent multiple loads
-    
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final isDark = prefs.getBool(SharedPreferencesKeys.themeMode) ?? false;
-      _hasLoaded = true;
-      state = isDark ? ThemeMode.dark : ThemeMode.light;
-    } catch (e) {
-      // If loading fails, keep default system theme
-      _hasLoaded = true;
-    }
-  }
+    Future<void> _loadTheme() async {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        // Use a default of null to detect if a preference has been set.
+        final isDark = prefs.getBool(SharedPreferencesKeys.themeMode);
+      
+        if (isDark != null) {
+          state = isDark ? ThemeMode.dark : ThemeMode.light;
+        }
+        // If isDark is null, we do nothing and let the state remain ThemeMode.system.
+      } catch (e) {
+        // Handle potential errors when accessing shared preferences.
+        debugPrint('Failed to load theme preference: $e');
+      }
 
   Future<void> toggleTheme(bool isDark) async {
     // Immediately update UI for better UX
