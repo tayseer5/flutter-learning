@@ -5,12 +5,10 @@ import '../providers/note_providers.dart';
 
 class NoteDialog extends ConsumerStatefulWidget {
   final NoteModel? note;
-  final int? noteIndex;
 
   const NoteDialog({
     super.key,
     this.note,
-    this.noteIndex,
   });
 
   @override
@@ -76,9 +74,9 @@ class _NoteDialogState extends ConsumerState<NoteDialog> {
             final content = _contentController.text.trim();
             
             if (title.isNotEmpty && content.isNotEmpty) {
-              if (isEditing && widget.noteIndex != null) {
+              if (isEditing && widget.note != null) {
                 ref.read(notesProvider.notifier).editNote(
-                  widget.noteIndex!,
+                  widget.note!.noteId,
                   title,
                   content,
                 );
@@ -107,12 +105,11 @@ void showAddNoteDialog(BuildContext context) {
   );
 }
 
-void showEditNoteDialog(BuildContext context, NoteModel note, int index) {
+void showEditNoteDialog(BuildContext context, NoteModel note) {
   showDialog(
     context: context,
     builder: (context) => NoteDialog(
       note: note,
-      noteIndex: index,
     ),
   );
 }

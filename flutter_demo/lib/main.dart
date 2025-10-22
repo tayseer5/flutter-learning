@@ -29,5 +29,3 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
-
-// TODO: theam usng shared prefrences and clear genric view , isuue of rerun

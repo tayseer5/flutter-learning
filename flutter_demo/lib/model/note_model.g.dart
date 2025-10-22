@@ -19,17 +19,20 @@ class NoteModelAdapter extends TypeAdapter<NoteModel> {
     return NoteModel(
       noteTitle: fields[0] as String,
       noteContent: fields[1] as String,
+      noteId: fields[2] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, NoteModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.noteTitle)
       ..writeByte(1)
-      ..write(obj.noteContent);
+      ..write(obj.noteContent)
+      ..writeByte(2)
+      ..write(obj.noteId);
   }
 
   @override

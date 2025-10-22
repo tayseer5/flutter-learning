@@ -9,13 +9,24 @@ class NoteModel {
   final String noteTitle;
   @HiveField(HiveFieldIds.noteContent)
   final String noteContent;
+  @HiveField(HiveFieldIds.noteId)
+  final String noteId;
 
-  NoteModel({required this.noteTitle, required this.noteContent});
+  NoteModel({
+    required this.noteTitle, 
+    required this.noteContent,
+    String? noteId,
+  }) : noteId = noteId ?? DateTime.now().millisecondsSinceEpoch.toString();
 
-NoteModel copyWith({String? title, String? content}) {
+  NoteModel copyWith({
+    String? title, 
+    String? content, 
+    String? noteId,
+  }) {
     return NoteModel(
       noteTitle: title ?? noteTitle,
       noteContent: content ?? noteContent,
+      noteId: noteId ?? this.noteId,
     );
   }
 }

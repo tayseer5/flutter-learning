@@ -41,7 +41,7 @@ class NoteList extends ConsumerWidget {
                  motion: const ScrollMotion(),
                  children: [
                    SlidableAction(
-                     onPressed: (_) => showEditNoteDialog(context, note, index),
+                     onPressed: (_) => showEditNoteDialog(context, note),
                      backgroundColor: Colors.blue.shade600,
                      foregroundColor: Colors.white,
                      icon: Icons.edit_outlined,
@@ -62,7 +62,7 @@ class NoteList extends ConsumerWidget {
                              ),
                              TextButton(
                                onPressed: () {
-                                 ref.read(notesProvider.notifier).deleteNote(index);
+                                 ref.read(notesProvider.notifier).deleteNote(note.noteId);
                                  Navigator.pop(context);
                                },
                                child: Text('Delete', style: TextStyle(color: Colors.red)),

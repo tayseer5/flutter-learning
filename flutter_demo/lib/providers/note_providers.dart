@@ -11,8 +11,8 @@ class NotesNotifier extends Notifier<List<NoteModel>> {
   List<NoteModel> build() {
     return HiveManager.notesBox.values.toList();
   }
-
-  Future<void> addNote(String title, String content) async { // Future<void> add(Note note) async {
+ 
+  Future<void> addNote(String title, String content) async {
     final newNote = NoteModel(
       noteTitle: title,
       noteContent: content,
@@ -22,20 +22,35 @@ class NotesNotifier extends Notifier<List<NoteModel>> {
     state = box.values.toList();
   }
 
-  Future<void> editNote(int index, String title, String content) async {
-    final updatedNote = NoteModel(
-      noteTitle: title,
-      noteContent: content,
-    );
+  Future<void> editNote(String noteId, String title, String content) async {
     final box = HiveManager.notesBox;
-     await box.putAt(index, updatedNote);
-     state = box.values.toList();
+    final noteKey = box.keys.firstWhere(
+      (key) => box.get(key)?.noteId == noteId,
+      orElse: () => null,
+    );
+    
+    if (noteKey != null) {
+      final updatedNote = NoteModel(
+        noteTitle: title,
+        noteContent: content,
+        noteId: noteId,
+      );
+      await box.put(noteKey, updatedNote);
+      state = box.values.toList();
+    }
   }
 
-  Future<void>  deleteNote(int index) async{
-   final box = HiveManager.notesBox;
-    await box.deleteAt(index);
-    state = box.values.toList();
+  Future<void> deleteNote(String noteId) async {
+    final box = HiveManager.notesBox;
+    final noteKey = box.keys.firstWhere(
+      (key) => box.get(key)?.noteId == noteId,
+      orElse: () => null,
+    );
+    
+    if (noteKey != null) {
+      await box.delete(noteKey);
+      state = box.values.toList();
+    }
   }
 
   Future<void> refresh() async {

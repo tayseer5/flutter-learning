@@ -4,6 +4,7 @@
 class HiveFieldIds {
   static const noteTitle = 0;
   static const noteContent = 1;
+  static const noteId = 2;
 }
 
 class HiveTypeIds {
