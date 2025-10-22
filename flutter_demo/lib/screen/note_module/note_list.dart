@@ -62,8 +62,8 @@ class NoteList extends ConsumerWidget {
                              ),
                              TextButton(
                                onPressed: () {
-                                 ref.read(notesProvider.notifier).deleteNote(note.noteId);
-                                 Navigator.pop(context);
+                                 Navigator.pop(context); // Close the dialog first
+                                 ref.read(notesProvider.notifier).deleteNote(index);
                                },
                                child: Text('Delete', style: TextStyle(color: Colors.red)),
                              ),
