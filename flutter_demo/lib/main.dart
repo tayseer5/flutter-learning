@@ -8,7 +8,15 @@ import 'theme/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveManager.init();
-  runApp(const ProviderScope(child: MyApp()));
+  
+  // Create container and load theme before running app
+  final container = ProviderContainer();
+  await container.read(themeProvider.notifier).loadTheme();
+  
+  runApp(UncontrolledProviderScope(
+    container: container,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends ConsumerWidget {
