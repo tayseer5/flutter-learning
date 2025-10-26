@@ -1,18 +1,25 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/foundation.dart'; 
 import '../services/api_service.dart';
 import '../models/book_model.dart';
 
 class BookViewModel extends ChangeNotifier {
-  final ApiService _apiService = ApiService();
-  List<BookModel> bookList = [];
+  final ApiService _apiService;
+  final List<BookModel> _bookList = [];
+  List<BookModel> get bookList => List.unmodifiable(_bookList);
   bool isLoading = false;
   String error = '';
 
+BookViewModel({ApiService? api}) : _apiService = api ?? ApiService();
+
   Future<void> fetchBookList() async {
     try{
+      error = '';
       isLoading = true;
       notifyListeners();
-      bookList = await _apiService.fetchBookList();
+      final fetchedBooks = await _apiService.fetchBookList();
+      _bookList
+        ..clear()
+        ..addAll(fetchedBooks);
     } catch (e) {
       error = e.toString();
     } finally {

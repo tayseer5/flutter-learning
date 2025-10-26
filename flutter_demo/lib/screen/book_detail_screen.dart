@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import '../models/book_model.dart';
 
 
@@ -9,49 +10,60 @@ class BookDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(title: Text(book.title)),
-      body: SafeArea(child: Container(
-        margin: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-             if (book.safeThumbnail != null)
-               Image.network(
-                 book.safeThumbnail!,
-                 height: 150,
-                 width: double.infinity,
-                 fit: BoxFit.cover,
-                 errorBuilder: (context, error, stackTrace) {
-                   return Container(
-                     height: 200,
-                     width: double.infinity,
-                     color: Colors.grey[300],
-                     child: const Icon(Icons.book, size: 50, color: Colors.grey),
-                   );
-                 },
-                 loadingBuilder: (context, child, loadingProgress) {
-                   if (loadingProgress == null) return child;
-                   return Container(
-                     height: 200,
-                     width: double.infinity,
-                     color: Colors.grey[200],
-                     child: const Center(child: CircularProgressIndicator()),
-                   );
-                 },
-               ),
-              const SizedBox(height: 20),
-              Text(book.title,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              const SizedBox(height: 16),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Text(book.description ?? 'No description available.'),
+       //appBar: AppBar(title: Text(book.title)),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            pinned: true,
+            iconTheme: const IconThemeData(color: Colors.white),
+            flexibleSpace: FlexibleSpaceBar(
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(book.title, style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+              ),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.network(book.thumbnail ?? '', fit: BoxFit.cover),
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.3),
+                    ),
+                  ),
+                ],
               ),
             ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: BookDetailsContainer(book: book),
+            )
+          )
+        ],
+      )
+    );
+  }
+}
 
-          ],
-        )
-      ))
+class BookDetailsContainer extends StatelessWidget {
+  const BookDetailsContainer({
+    super.key,
+    required this.book,
+  });
+
+  final BookModel book;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        SelectableText(book.description ?? 'No description available.'),
+      ],
     );
   }
 }
