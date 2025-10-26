@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/screen/profile_screen.dart';
-import 'theme/app_theme.dart';
+import 'package:flutter_demo/screen/books_list.dart';
+import 'package:flutter_demo/view_models/book_view_models.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +13,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
-      home: ProfileScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => BookViewModel(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true, 
+        ),
+        home: const BooksList(),
+      ),
     );
   }
 }
