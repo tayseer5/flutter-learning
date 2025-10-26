@@ -3,20 +3,27 @@ import 'package:flutter_demo/managers/hive_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_demo/screen/note_module/note_list.dart';
 import 'package:flutter_demo/providers/theme_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_demo/helpers/constant.dart';
 import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveManager.init();
   
-  // Create container and load theme before running app
-  final container = ProviderContainer();
-  await container.read(themeProvider.notifier).loadTheme();
-  
-  runApp(UncontrolledProviderScope(
-    container: container,
-    child: const MyApp(),
-  ));
+  // Load theme preference before running the app
+  final prefs = await SharedPreferences.getInstance();
+  final isDark = prefs.getBool(SharedPreferencesKeys.themeMode) ?? false;
+  final initialTheme = isDark ? ThemeMode.dark : ThemeMode.light;
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        themeProvider.overrideWith(() => ThemeNotifier(initialTheme))
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
