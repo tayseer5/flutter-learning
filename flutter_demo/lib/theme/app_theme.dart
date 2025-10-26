@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Light Theme Colors
-  static const Color lightTitleText = Color(0xFF1E293B);
-  static const Color lightSubtitleText = Color(0xFF64748B);
-  static const Color lightBackground = Color.fromARGB(255, 194, 216, 238);
+  // Light Theme Colors - Google Keep inspired
+  static const Color lightTitleText = Color(0xFF202124);
+  static const Color lightSubtitleText = Color(0xFF5F6368);
+  static const Color lightBackground = Color(0xFFFEFEFE);
   
-  // Dark Theme Colors
-  static const Color darkTitleText = Color(0xFFF1F5F9);
-  static const Color darkSubtitleText = Color(0xFF94A3B8);
-  static const Color darkBackground = Color(0xFF0F172A);
+  // Dark Theme Colors - Google Keep dark mode
+  static const Color darkTitleText = Color(0xFFE8EAED);
+  static const Color darkSubtitleText = Color(0xFF9AA0A6);
+  static const Color darkBackground = Color(0xFF202124);
 
   static final light = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(198, 151, 120, 204)),
-    scaffoldBackgroundColor: const Color.fromARGB(255, 225, 200, 233),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: const Color(0xFFFDBF00), // Google Keep yellow
+      brightness: Brightness.light,
+    ),
+    scaffoldBackgroundColor: lightBackground,
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: lightTitleText, fontSize: 22, fontWeight: FontWeight.bold),
       titleMedium: TextStyle(color: lightTitleText, fontSize: 18, fontWeight: FontWeight.w600),
@@ -27,12 +30,22 @@ class AppTheme {
       titleTextStyle: TextStyle(color: lightTitleText, fontSize: 16, fontWeight: FontWeight.w500),
       subtitleTextStyle: TextStyle(color: lightSubtitleText, fontSize: 14),
     ),
+    cardTheme: CardThemeData(
+      color: lightBackground,
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
   );
 
   static final dark = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    scaffoldBackgroundColor: const Color.fromARGB(255, 110, 71, 111),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: const Color(0xFFFDBF00), // Google Keep yellow
+      brightness: Brightness.dark,
+    ),
+    scaffoldBackgroundColor: darkBackground,
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: darkTitleText, fontSize: 22, fontWeight: FontWeight.bold),
       titleMedium: TextStyle(color: darkTitleText, fontSize: 18, fontWeight: FontWeight.w600),
@@ -44,6 +57,13 @@ class AppTheme {
     listTileTheme: const ListTileThemeData(
       titleTextStyle: TextStyle(color: darkTitleText, fontSize: 16, fontWeight: FontWeight.w500),
       subtitleTextStyle: TextStyle(color: darkSubtitleText, fontSize: 14),
+    ),
+    cardTheme: CardThemeData(
+      color: darkBackground,
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
     ),
   );
 }
