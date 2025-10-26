@@ -1,45 +1,37 @@
 import 'package:flutter/material.dart';
+import '../extentions/build_context_extentions.dart';
+import '../widgets/app_card_container.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: Container(
-      margin: const EdgeInsets.all(40),
-      child: SafeArea(
-        //child: Padding(
-          //padding: const EdgeInsets.all(0.0), // 40px padding from screen edges
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20), // Rounded corners
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(context.screenWidth * 0.09),
+          child: AppCardContainer(
+            padding: EdgeInsets.all(context.screenWidth * 0.09),
+            child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // Circular Profile Image
                   CircleAvatar(
                     radius: 60,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage: const NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'
-                    ),
+                    backgroundColor: colorScheme.outline.withValues(alpha: 0.2),
+                    backgroundImage: const NetworkImage('https://encrjypted-tbwewqewqen0.gstatic.com/images?q=tbn:ANd9GcQmLlz4kiZ23iny0wdtSPKQSpK-tpZfuM2QAQ&s'),
+                    onBackgroundImageError: (exception, stackTrace) {
+                      debugPrint('tayseer Image loading failed: $exception');
+                      debugPrint('tayseer Stack trace: $stackTrace');
+                    },
                     child: Icon(
                       Icons.person,
                       size: 60,
-                      color: Colors.grey[600],
+                      color: colorScheme.outline,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -47,45 +39,40 @@ class ProfileScreen extends StatelessWidget {
                   // Name
                   Text(
                     'John Doe',
-                    style: TextStyle(
+                    style: theme.textTheme.titleLarge?.copyWith(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      decoration: TextDecoration.none,
                     ),
                   ),
-                 // const SizedBox(height: 16),
                   
                   // Bio
                   Text(
                     'Software Developer & Flutter Enthusiast',
-                    style: TextStyle(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
-                      color: Colors.grey,
                       fontStyle: FontStyle.italic,
-                      decoration: TextDecoration.none,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
                   
-                  Text(
-                    'Passionate about creating beautiful mobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
-                      height: 1.5,
-                      decoration: TextDecoration.none,
+                  Expanded(
+                    child: Text(
+                      'Passionate about creating beautiful mobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community. I have extensive experience in Flutter development, working with various state management solutions like Provider, Bloc, and Riverpod. My expertise includes building responsive UIs, implementing complex animations, integrating third-party APIs, and optimizing app performance. I enjoy mentoring junior developers and contributing to open-source projects. In my free time, I love experimenting with new Flutter packages and staying updated with the latest mobile development trendsmobile applications and exploring new technologies. Love to code, learn, and share knowledge with the community. I have extensive experience in Flutter development, working with various state management solutions like Provider, Bloc, and Riverpod. My expertise includes building responsive UIs, implementing complex animations, integrating third-party APIs, and optimizing app performance. I enjoy mentoring junior developers and contributing to open-source projects. In my free time, I love experimenting with new Flutter packages and staying updated with the latest mobile development trends.',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 20,
+                      overflow: TextOverflow.fade,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
+              ],
             ),
           ),
-       // ),
+        ),
       ),
-    )
     );
   }
 }
