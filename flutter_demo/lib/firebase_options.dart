@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_demo/config/env_config.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,49 +41,49 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCwczPv7isAmncwr5XJNraTUX1CyM3YERQ',
-    appId: '1:881023077695:web:2ee8b02fb07e33ee7e978a',
-    messagingSenderId: '881023077695',
-    projectId: 'test-f19d2',
-    authDomain: 'test-f19d2.firebaseapp.com',
-    storageBucket: 'test-f19d2.firebasestorage.app',
-    measurementId: 'G-BCG8P1MP8H',
+  static FirebaseOptions get web => FirebaseOptions(
+    apiKey: EnvConfig.getRequiredEnv('FIREBASE_WEB_API_KEY'),
+    appId: EnvConfig.getRequiredEnv('FIREBASE_WEB_APP_ID'),
+    messagingSenderId: EnvConfig.getRequiredEnv('FIREBASE_WEB_MESSAGING_SENDER_ID'),
+    projectId: EnvConfig.getRequiredEnv('FIREBASE_WEB_PROJECT_ID'),
+    authDomain: EnvConfig.getRequiredEnv('FIREBASE_WEB_AUTH_DOMAIN'),
+    storageBucket: EnvConfig.getRequiredEnv('FIREBASE_WEB_STORAGE_BUCKET'),
+    measurementId: EnvConfig.getRequiredEnv('FIREBASE_WEB_MEASUREMENT_ID'),
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDFF03k3iHvPcLOCKfobf9Oc47GC2dSorM',
-    appId: '1:881023077695:android:52181096f63985b57e978a',
-    messagingSenderId: '881023077695',
-    projectId: 'test-f19d2',
-    storageBucket: 'test-f19d2.firebasestorage.app',
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: EnvConfig.getRequiredEnv('FIREBASE_ANDROID_API_KEY'),
+    appId: EnvConfig.getRequiredEnv('FIREBASE_ANDROID_APP_ID'),
+    messagingSenderId: EnvConfig.getRequiredEnv('FIREBASE_ANDROID_MESSAGING_SENDER_ID'),
+    projectId: EnvConfig.getRequiredEnv('FIREBASE_ANDROID_PROJECT_ID'),
+    storageBucket: EnvConfig.getRequiredEnv('FIREBASE_ANDROID_STORAGE_BUCKET'),
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCP7hg3rsmDXr5WxSdkEALLc582FKvkxjU',
-    appId: '1:881023077695:ios:e1508fe1943c51d27e978a',
-    messagingSenderId: '881023077695',
-    projectId: 'test-f19d2',
-    storageBucket: 'test-f19d2.firebasestorage.app',
-    iosBundleId: 'com.example.flutterDemo',
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: EnvConfig.getRequiredEnv('FIREBASE_IOS_API_KEY'),
+    appId: EnvConfig.getRequiredEnv('FIREBASE_IOS_APP_ID'),
+    messagingSenderId: EnvConfig.getRequiredEnv('FIREBASE_IOS_MESSAGING_SENDER_ID'),
+    projectId: EnvConfig.getRequiredEnv('FIREBASE_IOS_PROJECT_ID'),
+    storageBucket: EnvConfig.getRequiredEnv('FIREBASE_IOS_STORAGE_BUCKET'),
+    iosBundleId: EnvConfig.getRequiredEnv('FIREBASE_IOS_BUNDLE_ID'),
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCP7hg3rsmDXr5WxSdkEALLc582FKvkxjU',
-    appId: '1:881023077695:ios:e1508fe1943c51d27e978a',
-    messagingSenderId: '881023077695',
-    projectId: 'test-f19d2',
-    storageBucket: 'test-f19d2.firebasestorage.app',
-    iosBundleId: 'com.example.flutterDemo',
+  static FirebaseOptions get macos => FirebaseOptions(
+    apiKey: EnvConfig.getRequiredEnv('FIREBASE_MACOS_API_KEY'),
+    appId: EnvConfig.getRequiredEnv('FIREBASE_MACOS_APP_ID'),
+    messagingSenderId: EnvConfig.getRequiredEnv('FIREBASE_MACOS_MESSAGING_SENDER_ID'),
+    projectId: EnvConfig.getRequiredEnv('FIREBASE_MACOS_PROJECT_ID'),
+    storageBucket: EnvConfig.getRequiredEnv('FIREBASE_MACOS_STORAGE_BUCKET'),
+    iosBundleId: EnvConfig.getRequiredEnv('FIREBASE_MACOS_BUNDLE_ID'),
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCwczPv7isAmncwr5XJNraTUX1CyM3YERQ',
-    appId: '1:881023077695:web:065fc64439d7abde7e978a',
-    messagingSenderId: '881023077695',
-    projectId: 'test-f19d2',
-    authDomain: 'test-f19d2.firebaseapp.com',
-    storageBucket: 'test-f19d2.firebasestorage.app',
-    measurementId: 'G-SX0CMV5LHE',
+  static FirebaseOptions get windows => FirebaseOptions(
+    apiKey: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_API_KEY'),
+    appId: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_APP_ID'),
+    messagingSenderId: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_MESSAGING_SENDER_ID'),
+    projectId: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_PROJECT_ID'),
+    authDomain: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_AUTH_DOMAIN'),
+    storageBucket: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_STORAGE_BUCKET'),
+    measurementId: EnvConfig.getRequiredEnv('FIREBASE_WINDOWS_MEASUREMENT_ID'),
   );
 }

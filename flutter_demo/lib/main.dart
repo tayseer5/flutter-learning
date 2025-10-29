@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_demo/screens/login_screen.dart';
 import 'package:flutter_demo/screens/home_screen.dart';
 import 'package:flutter_demo/providers/auth_provider.dart';
@@ -11,6 +12,9 @@ import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load environment variables from .env file
+  await dotenv.load(fileName: ".env");
   
   // Initialize Firebase
   await Firebase.initializeApp(
