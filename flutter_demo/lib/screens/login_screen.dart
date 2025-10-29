@@ -260,9 +260,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         final password = _passwordController.text;
 
         if (_isLogin) {
-          await ref.watch(authServiceProvider).loginWithEmail(email, password);
+          await ref.read(authServiceProvider).loginWithEmail(email, password);
         } else {
-          await ref.watch(authServiceProvider).signUpWithEmailAndPassword(
+          await ref.read(authServiceProvider).signUpWithEmailAndPassword(
             email: email,
             password: password,
           );
@@ -282,7 +282,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _handleGoogleSignIn() async {
     try {
-      await ref.watch(authServiceProvider).signInWithGoogle();
+      await ref.read(authServiceProvider).signInWithGoogle();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
